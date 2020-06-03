@@ -176,14 +176,20 @@ func processOutboundEvents(client Client) {
 				log.Print("Failed to parse error response!", jsonErr)
 			}
 
+			fatalFailure := false
+
 			switch e := httpErr.Errcode; e {
 			case "M_LIMIT_EXCEEDED":
 				time.Sleep(time.Duration(httpErr.RetryAfterMs) * time.Millisecond)
+			case "M_FORBIDDEN":
+				event.done <- ""
+				fatalFailure = true
+				fallthrough
 			default:
 				log.Print("Failed to send message to room "+event.RoomID+" err: ", err)
 				log.Print(string(err.(gomatrix.HTTPError).Contents))
 			}
-			if !event.RetryOnFailure {
+			if !event.RetryOnFailure || fatalFailure {
 				event.done <- ""
 				break
 			}
