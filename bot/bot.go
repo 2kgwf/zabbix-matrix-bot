@@ -15,12 +15,17 @@ type ZabbixBot struct {
 	zabbixAPIURL                  string
 	zabbixUsername                string
 	zabbixPassword                string
+	adminUser                     string
 }
 
 func (bot ZabbixBot) handleMemberEvent(event *gomatrix.Event) {
 	if event.Content["membership"] == "invite" && *event.StateKey == bot.client.UserID {
-		bot.client.JoinRoom(event.RoomID)
-		log.Print("Joined room " + event.RoomID)
+		if event.Sender == bot.adminUser {
+			bot.client.JoinRoom(event.RoomID)
+			log.Print("Joined room " + event.RoomID)
+		} else {
+			log.Print("Ignoring room invite " + event.RoomID)
+		}
 	}
 }
 
@@ -51,7 +56,7 @@ func (bot ZabbixBot) Run() error {
 }
 
 // NewZabbixBot creates a new ZabbixBot instance and initializes a matrix client
-func NewZabbixBot(homeserverURL, userID, accessToken, zabbixAPIURL, zabbixUsername, zabbixPassword string) ZabbixBot {
+func NewZabbixBot(homeserverURL, userID, accessToken, zabbixAPIURL, zabbixUsername, zabbixPassword string, admin string) ZabbixBot {
 	c := matrix.NewClient(homeserverURL, userID, accessToken)
 	bot := ZabbixBot{
 		c,
@@ -59,6 +64,7 @@ func NewZabbixBot(homeserverURL, userID, accessToken, zabbixAPIURL, zabbixUserna
 		zabbixAPIURL,
 		zabbixUsername,
 		zabbixPassword,
+		admin,
 	}
 	c.OnEvent("m.room.member", bot.handleMemberEvent)
 	c.OnEvent("m.room.message", bot.handleTextEvent)
