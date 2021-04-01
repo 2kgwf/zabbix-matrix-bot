@@ -32,7 +32,7 @@ func main() {
 		case "ZABBIX_PASSWORD":
 			zabbixPassword = split[1]
 		case "ZABBIX_MATRIX_ADMIN":
-			accessToken = split[1]
+			admin = split[1]
 		}
 	}
 
