@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+  zabbix_matrix_bot:
+    image: scrinii/zabbix-matrix-bot
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      ZABBIX_MATRIX_HOMESERVER_URL: "http://matrix.example.com:8008"
+      ZABBIX_MATRIX_USER_ID: "@zabbix:example.com"
+      ZABBIX_MATRIX_ACCESS_TOKEN: "xxxx"
+      ZABBIX_API_URL: "http://zabbix.example.com/api_jsonrpc.php"
+      ZABBIX_USERNAME: "matrixbot"
+      ZABBIX_PASSWORD: "hunter1"
+      ZABBIX_MATRIX_ADMIN: "@admin:example.com"
