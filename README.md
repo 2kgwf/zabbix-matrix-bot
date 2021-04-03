@@ -26,9 +26,9 @@ TODO: improve documentatio and cleanup
 
 ### Example Message templates
 
-Message type: Problem
-Subject: `Problem: {EVENT.ID}`
-Message:
+- Message type: Problem
+- Subject: `Problem: {EVENT.ID}`
+- Message:
 
 ```
 <h4>⚠️ Problem: {EVENT.NAME}</h4> Problem started at <b>{EVENT.TIME}</b> on <b>{EVENT.DATE}</b>
@@ -39,9 +39,9 @@ Original problem ID: <i>{EVENT.ID}</i>
 <i>{TRIGGER.DESCRIPTION}</i>
 ```
 
-Message type: Problem recovery
-Subject: `Problem: {EVENT.ID}`
-Message:
+- Message type: Problem recovery
+- Subject: `Problem: {EVENT.ID}`
+- Message:
 
 ```
 <h4>✅ Resolved: {EVENT.NAME}</h4> Resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}. Problem started at <b>{EVENT.TIME}</b> on <b>{EVENT.DATE}</b>
@@ -52,9 +52,9 @@ Original problem ID: <i>{EVENT.ID}</i>
 <i>{TRIGGER.DESCRIPTION}</i>
 ```
 
-Message type: Problem update
-Subject: `Problem: {EVENT.ID}`
-Message:
+- Message type: Problem update
+- Subject: `Problem: {EVENT.ID}`
+- Message:
 
 ```
 <h4>⚠️ Problem: {EVENT.NAME}</h4> Problem started at <b>{EVENT.TIME}</b> on <b>{EVENT.DATE}</b>
